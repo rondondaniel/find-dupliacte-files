@@ -73,6 +73,6 @@ def main(source_folder: str, dest_folder: str) -> None:
 
 if __name__ == "__main__":
     print("Finding duplicate files...")
-    source_folder = "/Volumes/DataHome/Anaelle/1-Photos/2012-02" #"./origin"
+    source_folder =  #"./origin"
     dest_folder = "/Volumes/DataHome/Anaelle/0-Compress" #"./clone/"
     main(source_folder, dest_folder)
