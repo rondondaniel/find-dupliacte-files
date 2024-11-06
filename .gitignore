@@ -1,0 +1,63 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Distribution/build directories
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Package files
+*.egg
+*.whl
+
+# Logs and coverage reports
+*.log
+.coverage
+.cache
+.pytest_cache/
+nose2.xml
+coverage.xml
+*,cover
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# macOS files
+.DS_Store
+
+# Exclude image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.bmp
+*.tiff
+
+# Exclude video files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.mpeg
+*.mpg
+*.m4v
+*.3gp
+*.3g2
