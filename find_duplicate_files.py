@@ -2,6 +2,7 @@ import os
 import hashlib
 import shutil
 import pprint
+import argparse
 
 def hash_file(path: str) -> str:
     hasher = hashlib.md5()
@@ -65,14 +66,19 @@ def move_duplicates(duplicates: list[str], source_folder: str, dest_folder: str)
         shutil.move(file_path, dest_path)
         print(f"Moved duplicate: {file_path} -> {dest_path}")
 
-def main(source_folder: str, dest_folder: str) -> None:
-    print("Getting file information...")
+def main():
+    parser = argparse.ArgumentParser(description="Find and move duplicate files")
+    parser.add_argument('--source-folder', help='Path to the source folder')
+    parser.add_argument('--dest-folder', help='Path to the destination folder')
+    args = parser.parse_args()
+
+    source_folder = args.source_folder
+    dest_folder = args.dest_folder
+
+    print("Finding duplicate files...")
     files = get_files(source_folder, dest_folder)
     duplicates = get_duplicates(files)
     move_duplicates(duplicates, source_folder, dest_folder)
 
 if __name__ == "__main__":
-    print("Finding duplicate files...")
-    source_folder =  #"./origin"
-    dest_folder = "/Volumes/DataHome/Anaelle/0-Compress" #"./clone/"
-    main(source_folder, dest_folder)
+    main()
