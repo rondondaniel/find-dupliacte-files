@@ -26,18 +26,18 @@ def show_progress(current: int, total: int) -> None:
     print(f"Progress: {current}/{total} ({progress_pct:.1f}%)", file=sys.stderr)
 
 
-def create_date_folder(dest_path: Path, creation_date: datetime) -> Path:
+def create_date_folder(dest_path: Path, file_date: datetime) -> Path:
     """
     Create YYYY-MM folder structure and return the path.
     
     Args:
         dest_path: Base destination path
-        creation_date: File creation date
+        file_date: File date (modification date for better photo accuracy)
         
     Returns:
         Path to the YYYY-MM folder
     """
-    year_month = creation_date.strftime("%Y-%m")
+    year_month = file_date.strftime("%Y-%m")
     date_folder = dest_path / year_month
     date_folder.mkdir(parents=True, exist_ok=True)
     return date_folder
@@ -45,7 +45,7 @@ def create_date_folder(dest_path: Path, creation_date: datetime) -> Path:
 
 def move_file_to_date_folder(file_path: str, dest_base: Path, dry_run: bool = False) -> dict:
     """
-    Move a file to appropriate date folder based on its creation date.
+    Move a file to appropriate date folder based on its modification date (better for photos).
     
     Args:
         file_path: Source file path
@@ -56,9 +56,10 @@ def move_file_to_date_folder(file_path: str, dest_base: Path, dry_run: bool = Fa
         Dictionary with operation result
     """
     try:
-        # Get file creation date
+        # Get file creation date info (but we'll use modification date for better photo accuracy)
         file_info = get_creation_date(file_path)
-        creation_date = datetime.fromtimestamp(file_info['creation_timestamp'])
+        # Use modification date instead of creation date for better photo date accuracy
+        creation_date = datetime.fromtimestamp(file_info['modification_time'])
         
         # Create destination folder
         date_folder = create_date_folder(dest_base, creation_date)
@@ -84,7 +85,7 @@ def move_file_to_date_folder(file_path: str, dest_base: Path, dry_run: bool = Fa
             "source": str(source_path),
             "destination": str(dest_file_path),
             "date_folder": creation_date.strftime("%Y-%m"),
-            "creation_date": file_info['creation_date_readable'],
+            "modification_date": datetime.fromtimestamp(file_info['modification_time']).strftime("%Y-%m-%d %H:%M:%S"),
             "size": file_info['file_size']
         }
         
