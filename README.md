@@ -10,6 +10,9 @@ A Python script that finds and organizes duplicate files by moving them to a sep
 ### 2. File Creation Date Utility (`get_file_creation_date.py`)
 A cross-platform Python script to get the creation date of files and directories recursively, handling platform-specific differences for accurate file creation time retrieval.
 
+### 3. File Organization by Date (`organize_by_date.py`)
+A utility that moves files from a source folder to destination folders organized by creation date in YYYY-MM format. Uses the creation date detection from `get_file_creation_date.py` for accurate cross-platform date handling.
+
 ## Features
 
 - **Fast duplicate detection** using SHA-256 hash comparison
@@ -287,6 +290,74 @@ file_path,creation_timestamp,creation_date,source,platform
 ```
 1708012215.123456
 ```
+
+---
+
+## File Organization by Date
+
+### Features
+
+- **Date-based organization** - Automatically creates YYYY-MM folder structure
+- **Cross-platform date detection** - Uses functions from `get_file_creation_date.py`
+- **Safe operation** - Handles filename conflicts by appending numbers
+- **Dry run mode** - Preview changes before actually moving files
+- **Advanced filtering** - Include/exclude patterns for selective processing
+- **Progress indicators** - Shows progress for large file batches
+- **Recursive processing** - Processes entire directory trees
+
+### Usage
+
+```bash
+# Basic usage - organize all files by date
+python organize_by_date.py source_folder dest_folder
+
+# Dry run to preview what would be done
+python organize_by_date.py data moved --dry-run
+
+# Process only specific file types
+python organize_by_date.py data moved --include "*.jpg" "*.png" "*.gif"
+
+# Exclude unwanted files
+python organize_by_date.py data moved --exclude "*.tmp" "Thumbs.db" "*.DS_Store"
+
+# Quiet mode for automation
+python organize_by_date.py data moved --quiet
+```
+
+### How It Works
+
+1. **Scans source folder** recursively for files
+2. **Gets creation date** using cross-platform detection
+3. **Creates YYYY-MM folders** in destination directory
+4. **Moves files** to appropriate date folder
+5. **Handles conflicts** by appending numbers to duplicate filenames
+6. **Shows progress** and provides detailed summary
+
+### Example Output
+
+```
+Moving 176 files from /source to /destination
+
+Moved: IMG_3156.JPG -> 2025-08/
+Moved: IMG_3157.JPG -> 2025-08/
+Moved: vacation_photo.jpg -> 2024-07/
+Progress: 50/176 (28.4%)
+...
+
+Summary:
+  Files processed: 176
+  Files moved: 176
+  Errors: 0
+  Date folders created: 3
+  Folders: 2024-07, 2024-12, 2025-08
+```
+
+### Command Line Options
+
+- `--dry-run`: Preview changes without actually moving files
+- `--include PATTERN [PATTERN ...]`: Include only files matching these patterns
+- `--exclude PATTERN [PATTERN ...]`: Exclude files matching these patterns  
+- `--quiet`, `-q`: Suppress progress output (useful for automation)
 
 ---
 
